@@ -47,7 +47,7 @@ def insert_serie(id_computer, data, type, array_serie):
 
     pc = db.serie
 
-    serie_search = pc.find_one({'id_computer': id_computer, 'data': data})
+    serie_search = pc.find_one({'id_computer': id_computer, 'data': data, 'type': type})
 
     if serie_search:
         print(serie_search.get('_id'))
