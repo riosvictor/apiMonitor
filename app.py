@@ -1,6 +1,10 @@
 from db.connection import insert_computer, insert_serie
 from flask import Flask, request, Response, json
+from dotenv import load_dotenv
+import os
 
+
+load_dotenv()
 app = Flask(__name__)
 
 @app.route('/monitor', methods=['POST'])
@@ -24,7 +28,7 @@ def inser_data():
 
 
 if __name__ == '__main__':
-    app.run()
-
+    port = int(os.getenv("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
