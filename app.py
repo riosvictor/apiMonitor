@@ -1,4 +1,4 @@
-from db.connection import insert_computer, insert_serie
+from db.connection import insert_computer, insert_serie, get_series
 from flask import Flask, request, Response, json
 from dotenv import load_dotenv
 import os
@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.route('/monitor', methods=['POST'])
-def inser_data():
+def insert_data():
     content = request.get_json(force=True)
     computer = content['computer']
     date = content['date']
@@ -27,6 +27,24 @@ def inser_data():
                     status=200,
                     mimetype='application/json')
 
+
+
+@app.route('/monitor', methods=['GET'])
+def get_data():
+    content = request.get_json(force=True)
+    date = content['date']
+    type = content['type']
+
+    if content is None or content == {}:
+        return Response(response=json.dumps({"Error": "Please provide connection information"}),
+                        status=400,
+                        mimetype='application/json')
+
+    data_series = get_series(date, type)
+
+    return Response(response=json.dumps({'data': data_series}),
+                    status=200,
+                    mimetype='application/json')
 
 
 if __name__ == '__main__':

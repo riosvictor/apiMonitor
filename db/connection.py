@@ -57,3 +57,31 @@ def insert_serie(id_computer, data, type, array_serie):
         result = serie.insert_one(serie_data)
         print('One post: {0}'.format(result.inserted_id))
         return result.inserted_id
+
+
+def get_series(data, type):
+    db = client[os.getenv("NAME_DB")]
+
+    serie_data = {
+        'data': data,
+        'type': type,
+    }
+
+    serie = db.serie
+    pc = db.computer
+
+    serie_search = serie.find({'type': type, 'data': data})
+
+    result = []
+
+    for el in serie_search:
+        id_computer = el.get('id_computer')
+        pc_search = pc.find_one({'_id': id_computer})
+
+        print(el)
+        print(id_computer)
+        print(pc_search)
+
+        result.append({'serie': el.get('serie'), 'computer': pc_search.get('name')})
+
+    return result
