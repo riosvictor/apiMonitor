@@ -7,11 +7,13 @@ import os
 load_dotenv()
 app = Flask(__name__)
 
+
 @app.route('/monitor', methods=['POST'])
 def inser_data():
     content = request.get_json(force=True)
     computer = content['computer']
     date = content['date']
+    type = content['type']
     info_array = content['info_array']
 
     if content is None or content == {}:
@@ -19,7 +21,7 @@ def inser_data():
                         status=400,
                         mimetype='application/json')
 
-    id = insert_serie(insert_computer(computer), date, info_array)
+    id = insert_serie(insert_computer(computer), date, type, info_array)
 
     return Response(response=json.dumps({'message': 'insert successfully'}),
                     status=200,

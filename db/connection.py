@@ -35,12 +35,13 @@ def insert_computer(name):
         return result.inserted_id
 
 
-def insert_serie(id_computer, data, array_serie):
+def insert_serie(id_computer, data, type, array_serie):
     db = client[os.getenv("NAME_DB")]
 
     serie_data = {
         'id_computer': id_computer,
         'data': data,
+        'type': type,
         'serie': ",".join(map(str, array_serie))
     }
 
