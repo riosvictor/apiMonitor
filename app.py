@@ -28,12 +28,11 @@ def insert_data():
                     mimetype='application/json')
 
 
-
 @app.route('/monitor', methods=['GET'])
 def get_data():
     content = request.get_json(force=True)
-    date = content['date']
-    type = content['type']
+    date = request.args.get('date')
+    type = request.args.get('type')
 
     if content is None or content == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
