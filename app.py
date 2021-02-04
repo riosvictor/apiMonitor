@@ -30,11 +30,10 @@ def insert_data():
 
 @app.route('/monitor', methods=['GET'])
 def get_data():
-    content = request.get_json(force=True)
     date = request.args.get('date')
     type = request.args.get('type')
 
-    if content is None or content == {}:
+    if date is None or type is None:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
