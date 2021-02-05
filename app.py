@@ -1,11 +1,13 @@
 from db.connection import insert_computer, insert_serie, get_series
 from flask import Flask, request, Response, json
+from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 
 
 load_dotenv()
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/monitor', methods=['POST'])
